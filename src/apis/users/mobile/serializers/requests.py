@@ -10,12 +10,12 @@ class SignupRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = user_models.User
         fields: list[str] = [
-            'first_name', 'last_name', 'email', 'password', 'phone_number'
+            'first_name', 'last_name', 'email', 'password', 'phone_number', 'username'
         ]
         extra_kwargs: dict = {
             'first_name': {'required': True}, 'last_name': {'required': True},
             'email': {'required': True}, 'password': {'required': True},
-            'phone_number': {'required': True}
+            'phone_number': {'required': True}, 'username': {'required': True}
         }
 
     def create(self, validated_data):
@@ -27,6 +27,7 @@ class SignupRequestSerializer(serializers.ModelSerializer):
                 'email': validated_data.get('email', ''),
                 'phone_number': validated_data.get('phone_number', ''),
                 'password': validated_data.get('password', ''),
+                'username': validated_data.get('username', ''),
                 'role': role
             }
             user = user_models.User.create(payload)

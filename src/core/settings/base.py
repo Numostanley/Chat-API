@@ -92,6 +92,7 @@ MIDDLEWARE: list[str] = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'apis.authentication.middleware.TokenAuthMiddleware'
 ]
 
 ROOT_URLCONF: str = "core.routers.urls"

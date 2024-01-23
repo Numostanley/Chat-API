@@ -6,7 +6,7 @@ from .serializers import responses as mobile_user_response_serializers
 
 class SignupAPIView(base_repo_views.BasicAuthenticationAPIView):
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):  # noqa
         try:
             serializer = mobile_user_request_serializers.SignupRequestSerializer(
                 data=request.data
@@ -19,6 +19,7 @@ class SignupAPIView(base_repo_views.BasicAuthenticationAPIView):
                     'last_name': data['last_name'],
                     'email': data['email'],
                     'phone_number': data['phone_number'],
+                    'username': data['username'],
                     'user_id': created_user.id
                 }
                 return base_repo_responses.http_response_200(
@@ -35,7 +36,7 @@ class SignupAPIView(base_repo_views.BasicAuthenticationAPIView):
 
 class UserDetailAPIView(base_repo_views.UserAuthenticationAPIView):
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):  # noqa
         try:
             user = user_base_db_queries.get_user_by_id(id=self.request.user_id)
             if not user:

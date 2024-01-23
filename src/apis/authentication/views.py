@@ -98,7 +98,7 @@ class TokenAPIView(base_repo_views.BaseAPIView):
                         'Authentication Error!', errors=errors
                     )
 
-                user = user_base_db_queries.get_user_by_email(email=username)
+                user = user_base_db_queries.get_user_by_username(username=username)
                 if not user:
                     errors: dict = {
                         'error_message': 'invalid_user'

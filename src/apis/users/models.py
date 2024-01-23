@@ -127,7 +127,7 @@ class User(base_repo_models.BaseModel, AbstractUser):
             last_name=payload.get('last_name', ''),
             email=payload.get('email', ''),
             phone_number=User.append_phone_number(phone_number),
-            username=payload.get('email', ''),
+            username=payload.get('username', ''),
             role=payload.get('role', ''),
             password=make_password(payload.get('password', None))
         )
