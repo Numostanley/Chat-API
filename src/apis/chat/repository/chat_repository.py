@@ -1,18 +1,20 @@
 from django.db.models import Q
 from django.utils import timezone
 from rest_framework.generics import get_object_or_404
-
-from ..entity.models import Chat, Message
 from django.core.exceptions import ObjectDoesNotExist
 
 from ...users.models import User
+from ..entity.models import Chat, Message
+from ...users.db_queries import base as user_db_queries
 
 
 class ChatRepository:
     @staticmethod
-    def create_chat(user: User, target_user_id: str) -> Chat:
-        target_user = get_object_or_404(User, id=target_user_id)
+    def create_chat(user: User, target_user_id: str) -> Chat | None:
+        if not user_db_queries.get_user_by_id(target_user_id):
+            return None
 
+        target_user = get_object_or_404(User, id=target_user_id)
         existing_chat = Chat.objects.filter(  # noqa
             participants__in=[user, target_user]
         ).filter(
@@ -25,7 +27,6 @@ class ChatRepository:
         new_chat = Chat.objects.create()  # noqa
         new_chat.participants.add(user)
         new_chat.participants.add(target_user)
-
         return new_chat
 
     @staticmethod

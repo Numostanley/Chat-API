@@ -31,11 +31,15 @@ class ChatAPIView(base_repo_views.UserAuthenticationAPIView):
             user = User.objects.get(id=user_id)
             chat_service = ChatService()
             chat = chat_service.create_chat(user, target_user_id)
-
-            serializer = ChatSerializer(chat)
-            return base_repo_responses.http_response_200(
-                'Chat created successfully!', data=serializer.data
-            )
+            if chat is not None:
+                serializer = ChatSerializer(chat)
+                return base_repo_responses.http_response_200(
+                    'Chat created successfully!', data=serializer.data
+                )
+            else:
+                return base_repo_responses.http_response_404(
+                    'Invalid target_user_id!'
+                )
         except Exception as e:
             self._log.error('ChatAPIView.post@Error')
             self._log.error(e)

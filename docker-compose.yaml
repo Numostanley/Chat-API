@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - src/.env/dev/.env
+    restart: on-failure
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: chatapi
+      POSTGRES_USER: chatapi
+      POSTGRES_PASSWORD: chatapi
+    ports:
+      - '5432:5432'
+    volumes:
+        - postgres-db:/var/lib/postgressql/data
+
+  redis:
+    image: "redis:alpine"
+    restart: always
+    volumes:
+      - redis_volume_data:/data
+    ports:
+      - '6379:6379'
+
+volumes:
+  postgres-db:
+  redis_volume_data:
