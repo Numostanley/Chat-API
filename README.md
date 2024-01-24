@@ -81,6 +81,8 @@ python manage.py runserver
 ```
 
 # NOTE:
-You can find the Postman API documentation 
+This project requires >= 3.8.
+<br/>
+You can also find the Postman API documentation 
 to this project at: <br/>
 https://www.postman.com/orange-capsule-84916/workspace/chat-api
