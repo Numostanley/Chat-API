@@ -85,6 +85,8 @@ class MessageAPIView(base_repo_views.UserAuthenticationAPIView):
             self._log.error(e)
             return base_repo_responses.http_response_500(self.server_error_msg)
 
+
+class ReadMessageAPIView(base_repo_views.UserAuthenticationAPIView):
     def put(self, request, message_id):
         try:
             chat_service = ChatService()

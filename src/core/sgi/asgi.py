@@ -15,7 +15,7 @@ from django.core.asgi import get_asgi_application
 
 from ..settings import get_settings_environment
 from apis.chat import routing
-from apis.chat.tokenauth_middleware import TokenAuthMiddleware
+from apis.chat.middleware import TokenAuthMiddleware
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", get_settings_environment())
 
