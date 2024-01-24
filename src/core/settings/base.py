@@ -65,23 +65,29 @@ ALLOWED_HOSTS: list[str] = env_config['ALLOWED_HOSTS'].split(',')
 # Application definition
 
 INSTALLED_APPS: list[str] = [
-    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "daphne",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
     "django_extensions",
     "corsheaders",
     "channels",
     "drf_spectacular",
+
+
+    # custom apps
     "apis.authentication",
     "apis.base",
     "apis.clients",
     "apis.users",
+    "apis.chat"
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE: list[str] = [
     'django.middleware.security.SecurityMiddleware',
@@ -113,9 +119,18 @@ TEMPLATES: list[dict] = [
     },
 ]
 
+# WSGI_APPLICATION: str = "core.sgi.wsgi.application"
+
 ASGI_APPLICATION: str = "core.sgi.asgi.application"
 
-WSGI_APPLICATION: str = "core.sgi.wsgi.application"
+CHANNEL_LAYERS: dict = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 
 # Password validation
@@ -149,14 +164,6 @@ USE_I18N: bool = True
 USE_TZ: bool = True
 
 AUTH_USER_MODEL: str = 'users.User'
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD: str = "django.db.models.BigAutoField"
 

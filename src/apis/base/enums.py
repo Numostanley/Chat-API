@@ -10,6 +10,8 @@ class ModelPrefixEnum(StrEnum):
     REFRESH_TOKEN = 'rfsh_tkn_'
     USER = 'user_'
     CHAT = 'chat_'
+    MESSAGE = 'message_'
+    RECEIPT = 'receipt_'
 
 
 class QueryParamsEnum(StrEnum):

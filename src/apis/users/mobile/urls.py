@@ -15,5 +15,10 @@ urlpatterns: list = [
         'user_detail',
         mobile_views.UserDetailAPIView.as_view(),
         name='user_detail'
+    ),
+    path(
+        'users_list',
+        mobile_views.UserListAPIView.as_view(),
+        name='users_list'
     )
 ]

@@ -16,6 +16,7 @@ public_urls: list = [
     path('users/', include('apis.users.urls', namespace='users')),
     path('schema', SpectacularAPIView.as_view(), name='schema'),
     path('swagger', SpectacularSwaggerView.as_view(), name='swagger-ui'),
+    path('chat/', include('apis.chat.urls', namespace='chat')),
     re_path(r'^.*$', base_views.NotFoundAPIView.as_view())
 ]
 

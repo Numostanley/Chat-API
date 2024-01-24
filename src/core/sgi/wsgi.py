@@ -1,5 +1,5 @@
 """
-WSGI config for nafe project.
+WSGI config for chatapi project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

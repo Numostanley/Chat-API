@@ -53,3 +53,24 @@ class UserDetailAPIView(base_repo_views.UserAuthenticationAPIView):
             self._log.error('UserDetailAPIView.get@Error')
             self._log.error(e)
             return base_repo_responses.http_response_500(self.server_error_msg)
+
+
+class UserListAPIView(base_repo_views.UserAuthenticationAPIView):
+
+    def get(self, request, *args, **kwargs):  # noqa
+        try:
+            users = user_base_db_queries.get_all_users()
+            if not users:
+                return base_repo_responses.http_response_404(
+                    'No users exist!'
+                )
+            serializer = mobile_user_response_serializers.UserDetailSerializer(
+                instance=users, many=True
+            )
+            return base_repo_responses.http_response_200(
+                'Users list retrieved successfully!', data=serializer.data
+            )
+        except Exception as e:
+            self._log.error('UserListAPIView.get@Error')
+            self._log.error(e)
+            return base_repo_responses.http_response_500(self.server_error_msg)
