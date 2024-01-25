@@ -105,6 +105,6 @@ class ReadMessageAPIView(base_repo_views.UserAuthenticationAPIView):
                     'Invalid reader or message_id'
                 )
         except Exception as e:
-            self._log.error('MessageAPIView.put@Error')
+            self._log.error('ReadMessageAPIView.put@Error')
             self._log.error(e)
             return base_repo_responses.http_response_500(self.server_error_msg)
