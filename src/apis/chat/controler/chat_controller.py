@@ -1,7 +1,7 @@
 from ..service.chat_service import ChatService
 from ..entity.serializers import ChatSerializer, MessageSerializer
-from ...users.models import User
 from ...base import responses as base_repo_responses, views as base_repo_views
+from ...users.db_queries import base as user_db_queries
 
 
 class ChatAPIView(base_repo_views.UserAuthenticationAPIView):
@@ -9,7 +9,7 @@ class ChatAPIView(base_repo_views.UserAuthenticationAPIView):
         try:
             user_id: str = self.request.user_id
 
-            user = User.objects.get(id=user_id)
+            user = user_db_queries.get_user_by_id(user_id)
             chat_service = ChatService()
             chats = chat_service.get_chat(user)
 
@@ -28,7 +28,7 @@ class ChatAPIView(base_repo_views.UserAuthenticationAPIView):
             target_user_id: str = data.get('target_user_id')
             user_id: str = self.request.user_id
 
-            user = User.objects.get(id=user_id)
+            user = user_db_queries.get_user_by_id(user_id)
             chat_service = ChatService()
             chat = chat_service.create_chat(user, target_user_id)
             if chat is not None:

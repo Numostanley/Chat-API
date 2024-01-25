@@ -82,6 +82,7 @@ python manage.py runserver
 
 # NOTE:
 This project requires >= 3.8.
+Ensure you have Redis and PostgreSQL properly installed and configured.
 <br/>
 You can also find the Postman API documentation 
 to this project at: <br/>

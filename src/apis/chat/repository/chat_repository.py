@@ -6,6 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from ...users.models import User
 from ..entity.models import Chat, Message
 from ...users.db_queries import base as user_db_queries
+from ..db_queries import base as chat_db_queries
 
 
 class ChatRepository:
@@ -38,30 +39,29 @@ class ChatRepository:
 
     @staticmethod
     def send_message(chat_id: str, sender_id: str, content: str, attachment):
-        try:
-            chat = Chat.objects.get(id=chat_id)  # noqa
-            sender = User.objects.get(id=sender_id)  # noqa
+        chat = chat_db_queries.get_chat_by_id(chat_id)
+        sender = user_db_queries.get_user_by_id(sender_id)
+        if chat is not None and sender is not None:
             message = Message.objects.create(  # noqa
                 chat=chat, sender=sender,
                 content=content, attachment=attachment
             )
             return message
-        except ObjectDoesNotExist:
-            pass
+        else:
+            return None
 
     @staticmethod
     def list_messages(chat_id: str):
-        try:
-            chat = Chat.objects.get(id=chat_id)  # noqa
-            return Message.objects.filter(chat=chat)  # noqa
-        except ObjectDoesNotExist:
-            pass
+        messages = chat_db_queries.get_messages_by_chat_id(chat_id)
+        if len(messages) > 0:
+            return messages
+        return None
 
     @staticmethod
     def read_message(message_id, user_id):
         try:
-            message = Message.objects.get(id=message_id)  # noqa
-            if user_id != message.receiver.id:
+            message = chat_db_queries.get_message_by_id(message_id)
+            if message is None or user_id != message.receiver.id:
                 return None
             message.is_read = True
             message.read_time = timezone.now()
