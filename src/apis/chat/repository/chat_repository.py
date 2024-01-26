@@ -53,7 +53,7 @@ class ChatRepository:
     @staticmethod
     def list_messages(chat_id: str):
         messages = chat_db_queries.get_messages_by_chat_id(chat_id)
-        if len(messages) > 0:
+        if messages.count() > 0:
             return messages
         return None
 
