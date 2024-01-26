@@ -48,7 +48,7 @@ On macOS and Linux:
 source venv/bin/activate
 ```
 
-CHANGE DIRECTORY TO src FOLDER:
+Change the directory to the src folder:
 ```
 cd src
 ```
