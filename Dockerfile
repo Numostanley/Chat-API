@@ -16,8 +16,6 @@ COPY src /app
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /app/wait-for-it.sh
 RUN chmod +x /app/wait-for-it.sh
 
-RUN python manage.py makemigrations
-
 CMD ["./entrypoint.sh"]
 
 EXPOSE 8000
