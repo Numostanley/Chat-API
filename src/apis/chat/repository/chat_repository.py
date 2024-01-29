@@ -59,16 +59,13 @@ class ChatRepository:
 
     @staticmethod
     def read_message(message_id, user_id):
-        try:
-            message = chat_db_queries.get_message_by_id(message_id)
-            if message is None or user_id != message.receiver.id:
-                return None
-            message.is_read = True
-            message.read_time = timezone.now()
-            message.save()
-            return message
-        except ObjectDoesNotExist:
-            pass
+        message = chat_db_queries.get_message_by_id(message_id)
+        if message is None or user_id != message.receiver.id:
+            return None
+        message.is_read = True
+        message.read_time = timezone.now()
+        message.save()
+        return message
 
     @staticmethod
     def read_messages(chat_id: str, user_id: str):
